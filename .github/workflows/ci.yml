@@ -9,17 +9,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # Step 2: Setup Java (required for Android)
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
+      # Step 3: Give permission to Gradle
       - name: Grant Gradle Permission
         run: chmod +x ./gradlew
 
+      # Step 4: Build Debug APK
       - name: Build Debug APK
         run: ./gradlew assembleDebug
+
+      # Step 5: SonarCloud Code Analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # Step 6: Docker Build (Containerization)
+      - name: Build Docker Image
+        run: docker build -t android-devops .

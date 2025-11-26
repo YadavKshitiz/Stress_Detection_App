@@ -5,6 +5,5 @@ WORKDIR /app
 COPY . .
 
 RUN chmod +x gradlew
-RUN ./gradlew assembleDebug
 
-CMD ["echo", "Android build completed successfully"]
+CMD ["echo", "Android project container initialized successfully"]

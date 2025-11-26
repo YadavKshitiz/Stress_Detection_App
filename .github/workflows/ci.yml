@@ -28,11 +28,10 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
-      # Step 5: SonarCloud Code Analysis
+      # Step 5: SonarCloud Code Analysis (FIXED & NON-DEPRECATED)
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # Step 6: Docker Build (Containerization)
